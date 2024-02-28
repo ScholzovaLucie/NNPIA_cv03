@@ -3,17 +3,16 @@ package org.example.cv_03.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.ToString;
 
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
-@Entity(name="appuser")
+@Entity(name="task")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ID;
+    private Long id;
 
     @Column
     public String title;
@@ -28,9 +27,8 @@ public class Task {
     public Date update_date;
 
     @ManyToOne
-    @JoinColumn(name = "author_id", nullable = false)
-    @ToString.Exclude
-    public AppUser author;
+    @JoinColumn(nullable = false, name = "author_id")
+    AppUser author;
 
     public Task() {
 

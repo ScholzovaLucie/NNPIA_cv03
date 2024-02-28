@@ -5,22 +5,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @Entity(name="appuserrole")
 public class AppUserRole {
 
-    @OneToMany
-    @JoinColumn(name = "app_user_id", nullable = false)
-    @ToString.Exclude
-    public List<AppUser> app_user;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "role_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "app_user")
     @ToString.Exclude
-    public List<Role> role;
+    public AppUser app_user;
+
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "role_id")
+    Role role;
 
     public AppUserRole() {
 
