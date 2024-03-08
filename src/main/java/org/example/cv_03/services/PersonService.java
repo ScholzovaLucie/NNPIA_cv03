@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface PersonService {
     Optional<Person> getPersonById(Long id);
+
+    void deletePersonById(Long id);
 }

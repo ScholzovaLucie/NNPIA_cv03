@@ -18,18 +18,22 @@ public class Task {
     private Long id;
 
     @Column
-    private String title;
+    private String title = "title";
 
     @Column
-    private String text;
+    private String text = "text";
 
     @Column
-    private String description;
+    private String description = "description";
 
     @Column(columnDefinition = "TIMESTAMP")
-    private Date creation_date;
+    private Date creation_date = new Date();
 
     @Column(columnDefinition = "TIMESTAMP")
-    private Date update_date;
+    private Date update_date = new Date();
+
+    @ManyToOne
+    @JoinColumn(name="person_id")
+    public Person person;
 
 }

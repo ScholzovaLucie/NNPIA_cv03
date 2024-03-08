@@ -42,7 +42,7 @@ public class Person {
     private String password;
 
     @Column
-    private boolean active;
+    private boolean active = false;
 
     @Column
     private Date creation_date = new Date();
@@ -51,11 +51,15 @@ public class Person {
     private Date updateDate = new Date();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "person_role",
-            joinColumns = {@JoinColumn(name = "person_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    @JoinTable(
+            name = "person_role",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "person")
+    public Set<Task> tasks = new HashSet<>();
 
 
 }

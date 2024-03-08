@@ -17,4 +17,9 @@ public class PersonServiceImpl implements PersonService {
     public Optional<Person> getPersonById(Long id) {
         return personRepository.findById(id);
     }
+
+    @Override
+    public void deletePersonById(Long id) {
+        personRepository.deleteById(id);
+    }
 }

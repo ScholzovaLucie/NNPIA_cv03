@@ -29,18 +29,7 @@ public class DatabaseRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Task task1 = new Task();
-        task1.setTitle("Uklid");
-        //task1.setAuthor(user1);
-        Task task2 = new Task();
-        task2.setTitle("odpocinek");
-        //task2.setAuthor(user1);
-        Task task3 = new Task();
-        task3.setTitle("straz");
-        //task3.setAuthor(user1);
-        taskRepository.save(task1);
-        taskRepository.save(task2);
-        taskRepository.save(task3);
+
 
 
         Role role1 = new Role();
@@ -49,9 +38,7 @@ public class DatabaseRunner implements CommandLineRunner {
         role2.setName("policista");
         Role role3 = new Role();
         role3.setName("reditel");
-        roleRepository.save(role1);
-        roleRepository.save(role2);
-        roleRepository.save(role3);
+
 
 
         Person user1 = new Person();
@@ -61,6 +48,8 @@ public class DatabaseRunner implements CommandLineRunner {
         Set<Role> user1_roles = new HashSet<>();
         user1_roles.add(role1);
         user1.setRoles(user1_roles);
+        //Set<Task>user1_tasks = new HashSet<>();
+        //user1_tasks.add(task1);
 
         Person user2 = new Person();
         user2.setUsername("Eva");
@@ -68,15 +57,42 @@ public class DatabaseRunner implements CommandLineRunner {
         Set<Role> user2_roles = new HashSet<>();
         user2_roles.add(role2);
         user2_roles.add(role3);
-        user1.setRoles(user2_roles);
-
+        user2.setRoles(user2_roles);
+        //Set<Task>user2_tasks = new HashSet<>();
+        //user2_tasks.add(task2);
+        //user2_tasks.add(task3);
 
         Person user3 = new Person();
         user3.setUsername("Matej");
         user3.setPassword("heslo");
+
+        Person user4 = new Person();
+        user4.setUsername("Matěj");
+        user4.setPassword("heslo");
+
+        Task task1 = new Task();
+        task1.setTitle("Uklid");
+        task1.setPerson(user1);
+        Task task2 = new Task();
+        task2.setTitle("odpocinek");
+        task2.setPerson(user2);
+        Task task3 = new Task();
+        task3.setTitle("straz");
+        task3.setPerson(user3);
+
+
+
         personRepository.save(user1);
         personRepository.save(user2);
         personRepository.save(user3);
+
+        roleRepository.save(role1);
+        roleRepository.save(role2);
+        roleRepository.save(role3);
+
+        taskRepository.save(task1);
+        taskRepository.save(task2);
+        taskRepository.save(task3);
 
 
     }
