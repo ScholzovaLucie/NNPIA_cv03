@@ -3,34 +3,33 @@ package org.example.cv_03.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Data
+@Entity
+@Table(name="TASKS")
 @AllArgsConstructor
-@Entity(name="task")
+@NoArgsConstructor
+@Data
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
-    public String title;
+    private String title;
 
     @Column
-    public String description;
+    private String text;
 
     @Column
-    public Date creation_date;
+    private String description;
 
-    @Column
-    public Date update_date;
+    @Column(columnDefinition = "TIMESTAMP")
+    private Date creation_date;
 
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "author_id")
-    AppUser author;
+    @Column(columnDefinition = "TIMESTAMP")
+    private Date update_date;
 
-    public Task() {
-
-    }
 }

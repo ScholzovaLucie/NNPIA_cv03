@@ -3,13 +3,11 @@ package org.example.cv_03.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
- *
  * @Entity: Označuje třídu jako JPA entitu, což znamená, že je mapována na tabulku v databázi.
  * @Id: Určuje, že atribut je primárním klíčem entity.
  * @Table: Specifikuje jméno tabulky v databázi, ke které se entita mapuje.
@@ -25,37 +23,39 @@ import java.util.List;
  * @Embedded: Označuje, že atribut entity obsahuje jinou entitu, která má být vložena přímo do tabulky entity.
  * @Data: Generuje standardní metody jako toString(), equals(), hashCode() a metody pro přístup k atributům pomocí getterů a setterů.
  * @AllArgsConstructor: Generuje konstruktor, který přijímá všechny atributy třídy jako parametry, což usnadňuje inicializaci objektů s mnoha atributy.
- *
  */
-@Data
+@Entity
+@Table(name = "PERSON")
 @AllArgsConstructor
-@Entity(name="appuser")
-public class AppUser {
+@NoArgsConstructor
+@Data
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
-    public String username;
+    private String username;
 
     @Column
-    public String password;
+    private String password;
 
     @Column
-    public boolean active;
+    private boolean active;
 
     @Column
-    public Date creation_date;
+    private Date creation_date = new Date();
 
     @Column
-    public Date update_date;
+    private Date updateDate = new Date();
 
-    @OneToMany(mappedBy = "app_user")
-    private List<AppUserRole> app_user_roles = Collections.emptyList();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "person_role",
+            joinColumns = {@JoinColumn(name = "person_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
+    private Set<Role> roles = new HashSet<>();
 
-    public AppUser() {
-
-    }
 
 }

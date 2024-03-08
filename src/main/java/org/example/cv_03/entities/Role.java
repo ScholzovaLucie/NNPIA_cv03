@@ -3,28 +3,24 @@ package org.example.cv_03.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Entity
+@Table(name = "ROLES")
 @AllArgsConstructor
-@Entity(name="role")
+@NoArgsConstructor
+@Data
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
-    public String name;
+    private String name;
 
-    @OneToMany(mappedBy = "role")
-    List<AppUserRole> app_user_roles =  Collections.emptyList();;
-
-    public Role() {
-
-    }
-
-
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "roles")
+    private Set<Person> persons = new HashSet<>();
 }

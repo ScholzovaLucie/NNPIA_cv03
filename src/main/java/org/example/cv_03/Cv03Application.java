@@ -11,7 +11,6 @@ public class Cv03Application {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	// test comment
 	public static void main(String[] args) {
 		SpringApplication.run(Cv03Application.class, args);
 	}
