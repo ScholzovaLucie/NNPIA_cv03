@@ -14,8 +14,8 @@ public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
 
     @Override
-    public Optional<Person> getPersonById(Long id) {
-        return personRepository.findById(id);
+    public Person getPersonById(Long id) {
+        return personRepository.findAppUserById(id);
     }
 
     @Override
