@@ -30,6 +30,18 @@ public class PersonController {
         return Optional.of(person).orElseThrow(null);
     }
 
+    @PutMapping(value = APP_USER_PATH + "/app-user-update")
+    public ResponseEntity<?> updateExistingUser(@RequestParam Long id, @RequestBody Person person) {
+        Person currentUser = repository.findAppUserById(id);
+        currentUser.setUsername(person.getUsername());
+        currentUser.setRoles(person.getRoles());
+        currentUser.setUpdateDate(person.getUpdateDate());
+        currentUser.setActive(person.isActive());
+        currentUser.setPassword(person.getPassword());
+        repository.save(currentUser);
+        return ResponseEntity.ok().body("User updated");
+    }
+
     @DeleteMapping(APP_USER_PATH + "/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
 
