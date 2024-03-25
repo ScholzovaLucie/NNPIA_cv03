@@ -1,9 +1,12 @@
 package org.example.cv_03.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.example.cv_03.entities.Person;
 import org.example.cv_03.repository.PersonRepository;
+import org.example.cv_03.services.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,7 @@ import java.util.Optional;
 @RestController
 public class PersonController {
 
+    @Autowired
     public PersonRepository repository;
 
     public static final String APP_USER_PATH = "/app-user/v1";
@@ -34,6 +38,18 @@ public class PersonController {
         currentUser.setPassword(person.getPassword());
         repository.save(currentUser);
         return ResponseEntity.ok().body("User updated");
+    }
+
+    @PostMapping(value = APP_USER_PATH + "/app-user-add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addNewUser(@RequestBody Person person) {
+        if (person != null) {
+            repository.save(person);
+            return ResponseEntity.ok().body("Sucessfully added new user");
+        }
+        if (repository.findAppUserById(person.getId()) != null) {
+            return ResponseEntity.badRequest().body("User already exists");
+        }
+        return ResponseEntity.badRequest().body("Problem somewhere in passed user");
     }
 
     @DeleteMapping(APP_USER_PATH + "/{id}")
