@@ -15,7 +15,6 @@ import java.util.Optional;
 @RestController
 public class PersonController {
 
-    @Autowired
     public PersonRepository repository;
 
     public static final String APP_USER_PATH = "/app-user/v1";
@@ -40,7 +39,7 @@ public class PersonController {
         return ResponseEntity.ok().body("User updated");
     }
 
-    @PostMapping(value = APP_USER_PATH + "/app-user-add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_USER_PATH + "/app-person-add")
     public ResponseEntity<?> addNewUser(@RequestBody Person person) {
         if (person != null) {
             repository.save(person);

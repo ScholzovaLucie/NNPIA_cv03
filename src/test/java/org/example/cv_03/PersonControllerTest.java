@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.cv_03.controllers.PersonController;
 import org.example.cv_03.entities.Person;
 import org.example.cv_03.services.IPersonService;
-import org.example.cv_03.services.IPersonServiceImpl;
+import org.example.cv_03.services.PersonService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,7 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -34,10 +36,10 @@ public class PersonControllerTest {
     @MockBean
     IPersonService mockIPersonService;
 
-    IPersonServiceImpl personService = new IPersonServiceImpl();
+    PersonService personService = new PersonService();
 
     @Test
-    @WithMockUser(username = "nnpia", password = "nnpia")
+    @WithMockUser(username = "user", password = "password")
     public void getPersonByIdTest() throws Exception{
         Person testPerson = personService.listPersons().get(0);
 
@@ -51,6 +53,21 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$.username", is(testPerson.getUsername())));
     }
 
-    /* TODO test pro POST*/
+    @Test
+    @WithMockUser(username = "user", password = "password")
+    public void addPerson() throws Exception {
+        Person person = new Person();
+        person.setUsername("TestPerson");
+        person.setPassword("test");
+
+        given(personService.saveNewPerson(any(Person.class))).willReturn(person);
+
+        mock.perform(post("/api/app-user/v1/app-person-add")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(person)))
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("Location"));
+    }
 
 }

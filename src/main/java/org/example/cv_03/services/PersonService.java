@@ -28,6 +28,11 @@ public class PersonService implements IPersonService {
         persons.add(user1);
     }
 
+    public Person saveNewPerson(Person person){
+        persons.add(person);
+        return person;
+    }
+
 
     @Override
     public Person getPersonById(Long id) {
