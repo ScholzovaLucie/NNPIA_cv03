@@ -1,18 +1,18 @@
 package org.example.cv_03.services;
 
-import lombok.AllArgsConstructor;
 import org.example.cv_03.entities.Person;
 import org.example.cv_03.entities.Role;
-import org.example.cv_03.repository.PersonRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
 @Service
-public class PersonServiceImpl implements PersonService {
+@RestController
+public class IPersonServiceImpl implements IPersonService {
     List<Person> persons = new ArrayList<>();
 
-    public PersonServiceImpl(){
+    public IPersonServiceImpl(){
         Role role1 = new Role();
         role1.setName("udrzbar");
         Person user1 = new Person();
@@ -42,7 +42,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> listPersons() {
-        return null;
+        return persons;
     }
 
 
