@@ -8,9 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @SpringBootApplication
 public class Cv03Application {
 
-	@Autowired
-	JdbcTemplate jdbcTemplate;
-
 	public static void main(String[] args) {
 		SpringApplication.run(Cv03Application.class, args);
 	}
